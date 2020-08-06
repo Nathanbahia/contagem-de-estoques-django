@@ -49,16 +49,25 @@
 
 	<h5>Detalhes do Produto</h5>
 	<table class="table dark-table produto">
-		<tr><td class="bg-dark detail">Código</td><td id="codigo"></td></tr>
-		<tr><td class="bg-dark detail">Produto</td><td id="produto"></td></tr>
-		<tr><td class="bg-dark detail">Seção</td><td id="secao"></td></tr>
-		<tr><td class="bg-dark detail">Quantidade</td><td id="quantidade"></td></tr>		
-		<tr><td class="bg-dark detail">Atualização</td><td id="atualizacao"></td></tr>		
+		<tr><td class="bg-dark detail">Código</td><td id="td_codigo"></td></tr>
+		<tr><td class="bg-dark detail">Produto</td><td id="td_produto"></td></tr>
+		<tr><td class="bg-dark detail">Seção</td><td id="td_secao"></td></tr>
+		<tr><td class="bg-dark detail">Qtde Sistema</td><td id="td_quantidade"></td></tr>
+		<tr><td class="bg-dark detail">Qtde Física</td><td id="td_atualizacao"></td></tr>
 	</table>
 
 	<div class="form-group">
-		<input type='number' class='form-control' placeholder='Quantidade' id='qtde'>
-		<button class='btn btn-danger mt-3 w-100' id='btn-adiciona'>Acicionar</button>
+		<form id="formulario" method="post" action="#" autocomplete="off">
+			{% csrf_token %}
+			<input type="hidden" id="codigo" name="codigo">
+			<input type="hidden" id="nome" name="nome">
+			<input type="hidden" id="secao" name="secao">
+			<input type="hidden" id="qtde" name="qtde">
+
+			<input type='number' class='form-control' placeholder='Quantidade' id='contagem' name="contagem">
+			<button class='btn btn-danger mt-3 w-100' id='btn-adiciona' type="submit">Acicionar</button>
+
+		</form>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -71,12 +80,11 @@
 		let body = document.querySelector('body');
 		let codigo = $('#busca_codigo');
 		let btn = $('#btn-busca');		
-		let p1 = document.querySelector('#codigo');
-		let p2 = document.querySelector('#produto');
-		let p3 = document.querySelector('#secao');
-		let p4 = document.querySelector('#quantidade');
-		let p5 = document.querySelector('#atualizacao');
-
+		let p1 = document.querySelector('#td_codigo');
+		let p2 = document.querySelector('#td_produto');
+		let p3 = document.querySelector('#td_secao');
+		let p4 = document.querySelector('#td_quantidade');
+		let p5 = document.querySelector('#td_atualizacao');
 
 		$(btn).on('click', function () {
 			p1.innerHTML = '';
@@ -95,9 +103,36 @@
 			        return;
 				} 				  		    
 			}
-
 			alert('Produto não localizado!');
 		})
+
+		let btn_form = $('#btn-adiciona');
+		let form = $('#formulario');
+
+		$(form).on('submit', function (e) {
+			//e.preventDefault();
+
+			try {
+				let cod_ = document.querySelector('#codigo');
+				let nome_ = document.querySelector('#nome');
+				let secao_ = document.querySelector('#secao');
+				let qtde_ = document.querySelector('#qtde');
+
+				 cod_.value = p1.innerHTML;
+				 nome_.value = p2.innerHTML;
+				 secao_.value = p3.innerHTML;
+				 qtde_.value = p4.innerHTML;
+
+				 form.submit();
+			}
+
+			catch (e) {
+				console.log('Dados inconsistentes...');
+			}
+
+		});
+
+
 
 </script>
 </body>
