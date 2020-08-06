@@ -1,3 +1,13 @@
 from django.db import models
 
-# Create your models here.
+
+class ProdutoModel(models.Model):
+    codigo = models.CharField('Código', max_length=15)
+    nome = models.CharField('Nome', max_length=100)
+    secao = models.CharField('Seção', max_length=60)
+    qtde = models.FloatField('Quantidade')
+    atualizacao = models.DateField('Atualizado')
+
+    class Meta:
+        verbose_name = 'Produto'
+        verbose_name_plural = 'Produtos'
