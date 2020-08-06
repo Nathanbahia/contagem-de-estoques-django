@@ -1,6 +1,6 @@
-beautifulsoup4==4.9.1
-Django==2.2.1
-django-bootstrap4==2.2.0
-pytz==2020.1
-soupsieve==2.0.1
+beautifulsoup4==4.8.2
+django==2.2.1
+django-bootstrap4==1.1.1
+pytz==2019.3
+soupsieve==2.0
 sqlparse==0.3.1
