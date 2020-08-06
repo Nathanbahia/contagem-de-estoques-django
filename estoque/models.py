@@ -6,7 +6,7 @@ class ProdutoModel(models.Model):
     nome = models.CharField('Nome', max_length=100)
     secao = models.CharField('Seção', max_length=60)
     qtde = models.FloatField('Quantidade')
-    atualizacao = models.DateField('Atualizado')
+    contagem = models.FloatField('Contagem')
 
     class Meta:
         verbose_name = 'Produto'
