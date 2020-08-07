@@ -26,3 +26,4 @@ def index(request):
             context = {'produto': 'Erro', 'codigo': 'Erro', 'quantidade': 'Erro', 'estoque': 'Erro'}
 
     return render(request, 'index.html', context)
+
