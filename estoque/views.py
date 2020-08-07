@@ -1,11 +1,10 @@
-from django.urls import reverse_lazy
-from django.views.generic import FormView
 from .forms import ProdutoModelForm
 from .models import ProdutoModel
 from django.shortcuts import render
 
-def index(request):
+def index(request):    
     form = ProdutoModelForm(request.POST or None)
+    context = {}
     if str(request.method) == 'POST':
         if form.is_valid():
             cod = form.cleaned_data['codigo']
