@@ -1,3 +1,3 @@
 # Controle de Estoques
 
-Para acessar o projeto clique [aqui!](https://controle-estoques.netlify.app/)
+Para acessar o projeto clique [aqui!](https://casadoscereais.pythonanywhere.com/)
