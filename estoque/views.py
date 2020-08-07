@@ -2,33 +2,27 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 from .forms import ProdutoModelForm
 from .models import ProdutoModel
-from django.contrib import messages
+from django.shortcuts import render
 
-
-class IndexView(FormView):
-    template_name = "index.html"
-    form_class = ProdutoModelForm
-    success_url = reverse_lazy("index")
-
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        return context
-
-
-    def form_valid(self, form):
-        cod = form.cleaned_data['codigo']
-        produto = ProdutoModel.objects.filter(codigo=cod).first()
-        if produto is None:
-            form.save()
-        else:
+def index(request):
+    form = ProdutoModelForm(request.POST or None)
+    if str(request.method) == 'POST':
+        if form.is_valid():
+            cod = form.cleaned_data['codigo']
+            produto = ProdutoModel.objects.filter(codigo=cod).first()
             quantidade = form.cleaned_data['contagem']
-            produto.contagem += float(quantidade)
-            produto.save()
-            messages.success(self.request, f'Produto atuzalizado com sucesso:\n{produto.nome} ')
-        return super(IndexView, self).form_valid(form)
 
+            if produto is None:
+                form.save()
+                estoque = quantidade
 
-    def form_invalid(self, form):
-        messages.error(self.request, 'Erro ao atualizar produto.')
-        return super(IndexView, self).form_invalid(form)
+            else:
+                produto.contagem += float(quantidade)
+                estoque = produto.contagem
+                produto.save()
+
+            context = {'produto': produto, 'codigo': cod, 'quantidade': quantidade, 'estoque': estoque}
+
+        else:
+            context = {'produto': 'Erro', 'codigo': 'Erro', 'quantidade': 'Erro', 'estoque': 'Erro'}
+    return render(request, 'index.html', context)

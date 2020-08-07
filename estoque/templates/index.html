@@ -20,6 +20,9 @@
         .produto {
         	font-size: .75rem; 
         }
+        .alert {
+    		padding: 15px;
+    	}
     }
 
     .produto {
@@ -32,6 +35,11 @@
     	width: 30%;
     }
 
+    .alert span {
+    	text-transform: uppercase;
+    	float: right;
+    }
+
 	</style>
 </head>
 
@@ -40,7 +48,18 @@
 
 	<center><h1 class="h3 mt-1">Controle de Estoques</h1></center>
 	<hr>
-	{% bootstrap_messages %}
+
+	<!-- Alerta de Sucesso ou Erro de Envio do Formulário -->
+	<div class="alert alert-warning alert-dismissible">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<h5>PRODUTO ATUALIZADO</h5>
+		<hr>
+		<strong>Código:</strong> <span>{{ codigo }}</span><br>
+		<strong>Produto:</strong> <span>{{ produto }}</span><br>
+		<strong>Adicionado:</strong> <span>{{ quantidade }}</span><br>
+		<strong>Estoque Atual:</strong> <span>{{ estoque }}</span><br>
+	</div>
+
 	<div class="form-group">
 		<input type='number' class='form-control' placeholder='Código' id='busca_codigo'>
 		<button class='btn btn-primary mt-3 w-100' id='btn-busca'>Buscar</button>
@@ -53,7 +72,6 @@
 		<tr><td class="bg-dark detail">Produto</td><td id="td_produto"></td></tr>
 		<tr><td class="bg-dark detail">Seção</td><td id="td_secao"></td></tr>
 		<tr><td class="bg-dark detail">Qtde Sistema</td><td id="td_quantidade"></td></tr>
-		<tr><td class="bg-dark detail">Qtde Física</td><td id="td_atualizacao"></td></tr>
 	</table>
 
 	<div class="form-group">
@@ -74,6 +92,8 @@
 	<script src="{% static 'js/estoqueJSON.json' %}"></script>
 
 	<script>
+
+		let contagem = document.querySelector('#contagem');
 	
 		let body = document.querySelector('body');
 		let codigo = $('#busca_codigo');
@@ -82,14 +102,18 @@
 		let p2 = document.querySelector('#td_produto');
 		let p3 = document.querySelector('#td_secao');
 		let p4 = document.querySelector('#td_quantidade');
-		let p5 = document.querySelector('#td_atualizacao');
+
+		let msgBox = $('.alert');
 
 		$(btn).on('click', function () {
+
+			$(msgBox).hide(200);
+			$(contagem).focus();
+
 			p1.innerHTML = '';
 			p2.innerHTML = '';
 			p3.innerHTML = '';
 			p4.innerHTML = '';
-			p5.innerHTML = '';
 			let cod = $(codigo).val();			
 			for (let i = 0; i < dados.length; i++) {
 				if (cod === dados[i]['Cod']) {					
@@ -97,7 +121,6 @@
 			        p2.innerHTML = dados[i]['Produto'];
 			        p3.innerHTML = dados[i]['Secao'];
 			        p4.innerHTML = dados[i]['Quantidade'];
-			        p5.innerHTML = 'Dados pendentes...';
 			        return;
 				} 				  		    
 			}

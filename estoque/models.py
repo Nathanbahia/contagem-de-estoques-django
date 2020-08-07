@@ -11,3 +11,6 @@ class ProdutoModel(models.Model):
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
+
+    def __str__(self):
+        return self.nome
